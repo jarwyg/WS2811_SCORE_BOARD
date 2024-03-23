@@ -431,7 +431,7 @@ U 1 1 6608CC04
 P 7450 5800
 F 0 "Y1" V 7550 5950 50  0000 R CNN
 F 1 "16MHz" V 7450 6150 50  0000 R CNN
-F 2 "Crystal:Crystal_HC52-6mm_Vertical" H 7450 5800 50  0001 C CNN
+F 2 "Crystal:Crystal_HC49-U_Vertical" H 7450 5800 50  0001 C CNN
 F 3 "~" H 7450 5800 50  0001 C CNN
 	1    7450 5800
 	0    -1   -1   0   
@@ -837,14 +837,14 @@ Text GLabel 9200 5150 0    50   Input ~ 0
 RXD
 Text GLabel 9200 5250 0    50   Input ~ 0
 TXD
-Text GLabel 9200 5050 0    50   Input ~ 0
+Text GLabel 8650 5050 0    50   Input ~ 0
 RST
 Wire Wire Line
 	9200 5250 9300 5250
 Wire Wire Line
 	9300 5150 9200 5150
 Wire Wire Line
-	9300 5050 9200 5050
+	9300 5050 9050 5050
 $Comp
 L power:GND #PWR0127
 U 1 1 660D3BFA
@@ -1361,4 +1361,17 @@ Wire Wire Line
 	3600 3500 3550 3500
 Text GLabel 3950 3500 2    60   Input ~ 0
 WS2811_PIN
+$Comp
+L Device:C C13
+U 1 1 66698928
+P 8900 5050
+F 0 "C13" V 8648 5050 50  0000 C CNN
+F 1 "100nF" V 8750 5050 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 8938 4900 50  0001 C CNN
+F 3 "~" H 8900 5050 50  0001 C CNN
+	1    8900 5050
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8650 5050 8750 5050
 $EndSCHEMATC
