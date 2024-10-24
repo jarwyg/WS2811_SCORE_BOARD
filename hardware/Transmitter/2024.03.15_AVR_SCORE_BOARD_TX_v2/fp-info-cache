@@ -1,4 +1,4 @@
-317916180248395
+353335820083395
 Moje
 1_Pin_Rectangle
 module 1 pin (ou trou mecanique de percage)
@@ -48,6 +48,13 @@ DIL
 0
 16
 16
+Moje
+3642BS-1
+Module Dil 64 pins, pads elliptiques, e=900 mils
+DIL
+0
+12
+12
 Moje
 AK300-2
 CONNECTOR
@@ -210,6 +217,20 @@ C
 2
 2
 Moje
+CH340E_Module
+
+
+0
+10
+6
+Moje
+CLIFF_FC681501
+
+
+0
+6
+4
+Moje
 CLIPWATT19
 
 
@@ -228,7 +249,7 @@ CONN_RCA_1
 
 
 0
-2
+4
 2
 Moje
 CRYSTAL
@@ -239,6 +260,13 @@ DIL
 2
 Moje
 C[2,5](5)
+
+
+0
+2
+2
+Moje
+C[2,5mm]_12mm
 
 
 0
@@ -546,6 +574,13 @@ MH-MINI-360
 4
 4
 Moje
+MH-MINI_DC_DC
+
+
+0
+8
+4
+Moje
 MountingHole_3mm
 Mounting Hole 3mm, no annular
 mounting hole 3mm no annular
@@ -591,6 +626,13 @@ Moje
 OPD-S4030X-BW
 
 
+0
+10
+10
+Moje
+OPD-S8023LY-BW
+Module Dil 64 pins, pads elliptiques, e=900 mils
+DIL
 0
 10
 10
@@ -805,6 +847,13 @@ RPI_PICO
 40
 40
 Moje
+RPI_PICO_THT
+
+
+0
+40
+40
+Moje
 RV1
 Resistance variable / potentiometre
 R
@@ -882,6 +931,13 @@ CONN
 6
 6
 Moje
+SW_2x_ON_ON_v2
+Double rangee de contacts 2 x 4 pins
+CONN
+0
+6
+6
+Moje
 SW_SMALL(3X6)
 
 
@@ -910,12 +966,33 @@ SW_SMALL(12X12)
 4
 2
 Moje
+SW_SPST_B3S-1000_5pin
+Surface Mount Tactile Switch for High-Density Packaging
+Tactile Switch
+0
+5
+3
+Moje
+SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm
+SMD Solder Jumper, 1x1.5mm Triangular Pads, 0.3mm gap, open
+solder jumper open
+0
+2
+2
+Moje
 Sparkfun_Rubber_Button
 
 
 0
 10
 2
+Moje
+Switch_MTS-1
+
+
+0
+3
+3
 Moje
 TEA5767
 
@@ -985,7 +1062,7 @@ TP4056-18650
 
 0
 6
-4
+6
 Moje
 TSOP2236
 Module Dil 64 pins, pads elliptiques, e=900 mils
@@ -1021,6 +1098,13 @@ TV_Conn_1
 0
 4
 2
+Moje
+TYPE-C-31-M-12
+Korean Hroparts Elec, Power only USB connector supporting up to 3A
+
+0
+16
+13
 Moje
 Transformer_35x42_1x1
 http://www.breve.pl/pdf/ANG/TEZ_ang.pdf
@@ -1156,6 +1240,13 @@ CONN
 4
 Moje
 conn_2x3
+Double rangee de contacts 2 x 4 pins
+CONN
+0
+6
+6
+Moje
+conn_2x3_smd
 Double rangee de contacts 2 x 4 pins
 CONN
 0
