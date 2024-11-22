@@ -1,5 +1,3 @@
-/Release/*.eep
-/Release/*.elf
-/Release/*.hex
-/Release/*.lss
-/Release/*.map
+/Release/
+!/Release/makefile
+!/Release/*.mk
