@@ -1,2 +1,11 @@
-!makefile
-!*.mk
+*.[od]
+*.eep
+*.elf
+*.hex
+*.lss
+*.map
+/I2C_TWI/*.[od]
+/Light_WS2812/*.[od]
+/SPI/*.[od]
+/UART/*.[od]
+/nrf24l01/*.[od]
