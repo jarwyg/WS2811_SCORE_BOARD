@@ -1,1 +1,5 @@
-/Release/
+/Release/*.eep
+/Release/*.elf
+/Release/*.hex
+/Release/*.lss
+/Release/*.map
