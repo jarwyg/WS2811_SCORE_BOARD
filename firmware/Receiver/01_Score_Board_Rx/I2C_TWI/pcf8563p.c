@@ -27,14 +27,14 @@ void rtc_init(void){
 
 	uint8_t bufor[1];
 	bufor[0] = 0b00010001;
-	TWI_write_buf(ADR_PCF8563P_W, 0x01, 1,bufor);
+	TWI_write_buf(ADR_PCF8563P_W, 0x01, 1, bufor);
 
 
 	bufor[0] = 0b10000010;
-	TWI_write_buf(ADR_PCF8563P_W, 0x0e, 1,bufor);
+	TWI_write_buf(ADR_PCF8563P_W, 0x0e, 1, bufor);
 
 	bufor[0] = 1;
-	TWI_write_buf( ADR_PCF8563P_W, 0x0F, 1, bufor);
+	TWI_write_buf(ADR_PCF8563P_W, 0x0F, 1, bufor);
 
 }
 

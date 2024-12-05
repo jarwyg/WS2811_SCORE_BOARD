@@ -120,6 +120,7 @@ void update_LED(void){
 
 
 void disp_cls(void){
+	
 	for (uint8_t i = 0 ; i<MAXPIX ; i++){
 		led[i].r=0;
 		led[i].g=0;
@@ -132,6 +133,7 @@ void disp_cls(void){
 
 
 void disp_number(uint8_t num, uint8_t poz, uint32_t color){
+	
 	for(uint8_t i = 0 ; i<7 ; i++){
 		if(numbers[num][i]==1){
 			led[i+(poz)].r = color>>16;
