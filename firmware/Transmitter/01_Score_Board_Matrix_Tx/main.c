@@ -9,7 +9,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/pgmspace.h>
+#include <avr/sleep.h>
 #include <util/delay.h>
 
 #include <stdio.h>
@@ -19,6 +19,7 @@
 
 #include "UART/uart.h"
 #include "nrf24l01/nrf24l01.h"
+#include "nrf24l01/nrf24l01registers.h"
 #include "ADC/ADC.h"
 #include "common.h"
 
@@ -27,25 +28,7 @@ uint8_t key_pressed;
 
 
 
-#define COL_DDR DDRD
-#define COL_PORT PORTD
-#define COL_PIN PIND
 
-#define COL1_PIN (1<<7)
-#define COL2_PIN (1<<6)
-#define COL3_PIN (1<<5)
-
-#define ROW_DDR DDRC
-#define ROW_PORT PORTC
-#define ROW_PIN PINC
-
-#define ROW1_PIN (1<<1)
-#define ROW2_PIN (1<<2)
-#define ROW3_PIN (1<<3)
-#define ROW4_PIN (1<<4)
-
-#define COLUMN_gm   (COL1_PIN|COL2_PIN|COL3_PIN)
-#define ROWS_gm   (ROW1_PIN|ROW2_PIN|ROW3_PIN|ROW4_PIN)
 
 
 uint8_t check_rows(uint8_t column){
@@ -103,7 +86,7 @@ uint8_t scan_keys(void)
 }
 
 
-
+volatile uint8_t int_flag = 0;
 int main(void) {
 
 	uart_init(UBRR);//UART baud 9600
@@ -113,46 +96,58 @@ int main(void) {
 
 
 	TCCR0A |= (1<<WGM01);
-	TCCR0B |= (1<<CS00)|(1<<CS02);
-	OCR0A = 154;
+	TCCR0B |= (1<<CS00)|(1<<CS02);//PRESCALER = 1024
+	//F_CPU = 8000000Hz
+	//TIMER_FREQ = 1024
+	OCR0A = 77;//F_CPU/PRESCALER/TIMER_FREQ
 	TIMSK0 |= (1<<OCIE0A);
-
 
 
 	ROW_DDR &= ~ROW1_PIN | ROW2_PIN | ROW3_PIN | ROW4_PIN;//Rows Input
 	ROW_PORT |= ROW1_PIN | ROW2_PIN | ROW3_PIN | ROW4_PIN;//Rows Input Pullup
 
 	COL_DDR |= COL1_PIN | COL2_PIN | COL3_PIN;//Col Output
-	COL_PORT |= COL1_PIN | COL2_PIN | COL3_PIN;//Col Output High
+	COL_PORT &= ~(COL1_PIN | COL2_PIN | COL3_PIN);//Col Output LOW
 
+	//Enable PCINT INTERRUPT
+    PCICR |= (1<<PCIE1);
+    PCMSK1 |= (1<<PCINT9)|(1<<PCINT10)|(1<<PCINT11)|(1<<PCINT12);
+
+    //disable nrf
+    nrf24l01_CElo;
 
 	sei();
 
 
 	while (1) {
+		if(int_flag == 1){
+			nrf24l01_CEhi;
 
-		key_pressed = scan_keys();
-
-
-		CheckKeys(key_pressed);
-
-
-//		if(key_pressed){
-//			uart_putint(key_pressed,10);
-//			uart_putc('\r');
-//			uart_putc('\n');
-//		}
+			//CheckBattery();//check battery voltage
 
 
+			key_pressed = scan_keys();
+			CheckKeys(key_pressed);
+
+//			_delay_ms(100);
+
+			COL_PORT &= ~(COL1_PIN | COL2_PIN | COL3_PIN);//Col Output LOW
+			nrf24l01_CElo;
+
+			int_flag = 0;
+		}else{
+
+			go_to_sleep();
+
+		}
 
 
-
-
-
-//		getKeypad();//reading analog values
-//		CheckBattery();//check battery voltage
-
-//		CheckKeys();
-//		LongShortKeys();//blue buttons
 	}
+}
+
+
+
+ISR(PCINT1_vect)
+{
+	int_flag = 1;
 }

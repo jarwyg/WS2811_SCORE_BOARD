@@ -11,7 +11,7 @@
 #include <string.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/pgmspace.h>
+#include <avr/sleep.h>
 #include <util/delay.h>
 #include <avr/wdt.h>
 
@@ -72,7 +72,7 @@ void CheckBattery(void){
 void SendStr(const char *charr){
 	strcpy(bufferout, charr);
 	sendMsg(0);
-
+	_delay_ms(200);
 #ifdef DBG
 	uart_puts((char*)charr);
 	uart_puts("\r\n");
@@ -218,6 +218,18 @@ void CheckKeys(uint8_t key_pressed){
 }
 
 
+
+void go_to_sleep(void)
+{
+    uint8_t adcsra = ADCSRA;       //save the ADC Control and Status Register A
+    ADCSRA = 0;                    //disable the ADC
+
+    //SMCR |= (1<<SM1);//SLEEP_MODE_PWR_DOWN
+	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+	sleep_mode();
+
+    ADCSRA = adcsra;               //restore ADCSRA
+}
 
 
 
