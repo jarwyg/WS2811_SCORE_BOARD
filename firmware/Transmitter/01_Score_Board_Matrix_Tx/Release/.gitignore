@@ -1,0 +1,11 @@
+*.[od]
+*.eep
+*.elf
+*.hex
+*.lss
+*.map
+/Light_WS2812/*.[od]
+/SPI/*.[od]
+/UART/*.[od]
+/nrf24l01/*.[od]
+/ADC/*.[od]
