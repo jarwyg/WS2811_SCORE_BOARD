@@ -44,7 +44,6 @@ void disp_time(void){
 
 int main(void) {
 
-
 	_delay_ms(1000);//wait to init pcf8563
 
 	DDRC |= (1<<PC3);//
@@ -62,6 +61,7 @@ int main(void) {
 //	PORTD |= (1 << PD3); //not needed if hardware pullup resistor is placed
 
 	uart_init(UBRR);
+	uart_puts("Score Board v2.0\r\n");
 
 	nrf24l01_init();
 
@@ -104,10 +104,9 @@ int main(void) {
 			uart_putlong(pcf8563_rtc.minutes, 10);
 			uart_putc(':');
 			uart_putlong(pcf8563_rtc.seconds, 10);
-			uart_putc('\r');
-			uart_putc('\n');
 			
-			uart_puts("off timer: ");
+			
+			uart_puts(" off_timer: ");
 			uart_putlong(off_timer, 10);
 			uart_putc('\r');
 			uart_putc('\n');
