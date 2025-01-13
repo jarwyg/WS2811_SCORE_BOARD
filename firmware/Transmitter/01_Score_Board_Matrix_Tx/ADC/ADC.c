@@ -24,8 +24,8 @@ void InitADC(void){
 }
 
 
-uint16_t pomiar(uint8_t kanal){
-	ADMUX = (ADMUX & 0xF8)|kanal;
+uint16_t get_adc_value(uint8_t channel){
+	ADMUX = (ADMUX & 0xF8)|channel;
 	ADCSRA |= (1<<ADSC);
 	while(ADCSRA & (1<<ADSC));
 	return ADCW;

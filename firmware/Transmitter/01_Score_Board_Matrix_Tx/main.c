@@ -32,57 +32,91 @@ uint8_t key_pressed;
 
 
 uint8_t check_rows(uint8_t column){
-  if(!(PINC & ROW1_PIN)){
-    return (column * 4 + 1);
-  }
-  else if(!(PINC & ROW2_PIN)){
-    return (column * 4 + 2);
-  }
-  else if(!(PINC & ROW3_PIN)){
-    return (column * 4 + 3);
-  }
-  else if(!(PINC & ROW4_PIN)){
-    return (column * 4 + 4);
-  }
-  else{
-    return 0;
-  }
+	uint8_t to_return = 0;
+//	if(!(PINC & ROW1_PIN)){
+//		to_return = 1;
+//	}
+//	if(!(PINC & ROW2_PIN)){
+//
+//		if(to_return == 1) to_return = 22;
+//		else to_return = 2;
+//	}
+//	if(!(PINC & ROW3_PIN)){
+//		to_return = 3;
+//	}
+//	if(!(PINC & ROW4_PIN)){
+//
+//		if(to_return == 3) to_return = 24;
+//		else to_return = 4;
+//	}
+//
 
+
+
+	if(!(PINC & ROW1_PIN)){
+//		return (column * 4 + 1);
+		to_return = (column * 4 + 1);
+	}
+	if(!(PINC & ROW2_PIN)){
+//		return (column * 4 + 2);
+		to_return = (column * 4 + 2);
+	}
+	if(!(PINC & ROW3_PIN)){
+//		return (column * 4 + 3);
+		to_return = (column * 4 + 3);
+	}
+	if(!(PINC & ROW4_PIN)){
+//		return (column * 4 + 4);
+		to_return = (column * 4 + 4);
+	}
+	if(!(PINC & ROW1_PIN) && !(PINC & ROW2_PIN)){
+		to_return = (column * 4 + 35);
+	}
+	if(!(PINC & ROW3_PIN) && !(PINC & ROW4_PIN)){
+		to_return = (column * 4 + 36);
+	}
+
+
+//	else{
+//		return 0;
+//	}
+
+	return to_return;
 }
 
 
 uint8_t scan_keys(void)
 {
-   uint8_t key = 0;
+	uint8_t key = 0;
 
 
-   uint8_t rows_tmp = 0;
+	uint8_t rows_tmp = 0;
 
-   COL_PORT &= ~COL1_PIN;//COL1 LOW
-   rows_tmp = check_rows(0);
-   if(rows_tmp){
-   key = rows_tmp;
-   }
-   COL_PORT |= COL1_PIN;//COL1 HIGH
-
-
-   COL_PORT &= ~COL2_PIN;//COL2 LOW
-   rows_tmp = check_rows(1);
-   if(rows_tmp){
-   key = rows_tmp;
-   }
-   COL_PORT |= COL2_PIN;//COL2 HIGH
-
-   COL_PORT &= ~COL3_PIN;//COL3 LOW
-   rows_tmp = check_rows(2);
-   if(rows_tmp){
-   key = rows_tmp;
-   }
-   COL_PORT |= COL3_PIN;//COL3 HIGH
+	COL_PORT &= ~COL1_PIN;//COL1 LOW
+	rows_tmp = check_rows(0);
+	if(rows_tmp){
+		key = rows_tmp;
+	}
+	COL_PORT |= COL1_PIN;//COL1 HIGH
 
 
+	COL_PORT &= ~COL2_PIN;//COL2 LOW
+	rows_tmp = check_rows(1);
+	if(rows_tmp){
+		key = rows_tmp;
+	}
+	COL_PORT |= COL2_PIN;//COL2 HIGH
 
-  return key;
+
+	COL_PORT &= ~COL3_PIN;//COL3 LOW
+	rows_tmp = check_rows(2);
+	if(rows_tmp){
+		key = rows_tmp;
+	}
+	COL_PORT |= COL3_PIN;//COL3 HIGH
+
+
+	return key;
 }
 
 
@@ -91,17 +125,13 @@ int main(void) {
 
 	uart_init(UBRR);//UART baud 9600
 	nrf24l01_init();
-//	InitADC();
+	InitADC();
 
+	LED_R_LOW_BATT_PIN_SET_AS_OUT;
+	LED_R_LOW_BATT_OFF;//low battery LED off
 
-
-	TCCR0A |= (1<<WGM01);
-	TCCR0B |= (1<<CS00)|(1<<CS02);//PRESCALER = 1024
-	//F_CPU = 8000000Hz
-	//TIMER_FREQ = 1024
-	OCR0A = 77;//F_CPU/PRESCALER/TIMER_FREQ
-	TIMSK0 |= (1<<OCIE0A);
-
+	LED_G_TX_PIN_SET_AS_OUT;
+	LED_G_TX_OFF;//tx LED off
 
 	ROW_DDR &= ~ROW1_PIN | ROW2_PIN | ROW3_PIN | ROW4_PIN;//Rows Input
 	ROW_PORT |= ROW1_PIN | ROW2_PIN | ROW3_PIN | ROW4_PIN;//Rows Input Pullup
@@ -110,11 +140,11 @@ int main(void) {
 	COL_PORT &= ~(COL1_PIN | COL2_PIN | COL3_PIN);//Col Output LOW
 
 	//Enable PCINT INTERRUPT
-    PCICR |= (1<<PCIE1);
-    PCMSK1 |= (1<<PCINT9)|(1<<PCINT10)|(1<<PCINT11)|(1<<PCINT12);
+	PCICR |= (1<<PCIE1);
+	PCMSK1 |= (1<<PCINT9)|(1<<PCINT10)|(1<<PCINT11)|(1<<PCINT12);
 
-    //disable nrf
-    nrf24l01_CElo;
+	//disable nrf
+	nrf24l01_CElo;
 
 	sei();
 
@@ -123,16 +153,27 @@ int main(void) {
 		if(int_flag == 1){
 			nrf24l01_CEhi;
 
-			//CheckBattery();//check battery voltage
+			uint16_t adc_value = get_adc_value(0);
 
 
-			key_pressed = scan_keys();
-			CheckKeys(key_pressed);
+			if (adc_value < 460){//lower than 2,8V
+				LED_R_LOW_BATT_ON;//low battery LED on
+//				BUZZ_ON;
+				_delay_ms(K_DEL_TIME);
+			}else{
+				LED_G_TX_ON;//tx LED on
+				key_pressed = scan_keys();
+				CheckKeys(key_pressed);
+			}
 
-//			_delay_ms(100);
+
+			LED_R_LOW_BATT_OFF;//low battery LED off
+			LED_G_TX_OFF;//tx LED off
+//			BUZZ_OFF;
 
 			COL_PORT &= ~(COL1_PIN | COL2_PIN | COL3_PIN);//Col Output LOW
 			nrf24l01_CElo;
+
 
 			int_flag = 0;
 		}else{

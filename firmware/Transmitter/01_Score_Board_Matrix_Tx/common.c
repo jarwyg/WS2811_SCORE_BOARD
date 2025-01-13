@@ -42,32 +42,6 @@ void beep(void)
 }
 
 
-void CheckBattery(void){
-	if(!timer_0){
-
-		if (pomiar(3) < 540){
-
-#ifdef DBG
-			uart_puts("low battery\r\n");
-#endif
-			PORTC &= ~LED_R_BATT;//on
-			BUZZ_ON;
-			_delay_ms(100);
-			BUZZ_OFF;
-		}else{
-			PORTC |= LED_R_BATT;//off
-		}
-
-#ifdef DBG
-		uart_putlong(pomiar(3),10);
-		uart_puts("\r\n");
-#endif
-		timer_0=100;
-	}
-
-
-}
-
 
 void SendStr(const char *charr){
 	strcpy(bufferout, charr);
@@ -117,6 +91,18 @@ void sendMsg(uint8_t pipe) {
 
 void CheckKeys(uint8_t key_pressed){
 
+	uart_putlong(key_pressed,10);
+	uart_puts("\r\n");
+
+	if( key_pressed == 35 || key_pressed == 43 ) {
+		SendStr("RSTS");//reset setów
+		_delay_ms(K_DEL_TIME);
+	}
+	if( key_pressed == 36 || key_pressed == 44 ) {
+		SendStr("RSTP");//reset punktów
+		_delay_ms(K_DEL_TIME);
+	}
+
 	if( key_pressed == 12 ) {
 		SendStr("D2P-");//Y1
 		_delay_ms(K_DEL_TIME);
@@ -133,6 +119,16 @@ void CheckKeys(uint8_t key_pressed){
 		SendStr("D2S+");//Y4
 		_delay_ms(K_DEL_TIME);
 	}
+
+	if( key_pressed == 8 ) {
+		SendStr("TRST");
+		_delay_ms(K_DEL_TIME);
+	}
+	if( key_pressed == 7 ) {
+		SendStr("TPPS");
+		_delay_ms(K_DEL_TIME);
+	}
+
 
 	if( key_pressed == 6 ) {
 		SendStr("MIN+");
@@ -161,60 +157,6 @@ void CheckKeys(uint8_t key_pressed){
 	}
 
 
-
-
-
-	//drugi klawisz
-	if( key_pressed == 8 ) {
-		if(timer_1_lock == 0){
-			timer_1 = 150;//2 sekunda
-			timer_1_lock = 1;
-		}
-	}
-	//short press
-	if( (timer_1 > 70) && (timer_1 != 0) && (key_pressed == 0) && (timer_1_lock == 1) ){//short click 300ms max
-		SendStr("TRST");//reset timera
-		timer_1=0;
-		timer_1_lock = 0;
-		_delay_ms(K_DEL_TIME);
-	}
-
-	//long press after 1000ms
-	if(  (timer_1 < 50) && (timer_1_lock == 1) && (key_pressed == 8) ){
-		SendStr("RSTP");//reset punktów
-		beep();
-	}
-
-	if(timer_1 == 0){//auto reset timera
-		timer_1_lock = 0;
-	}
-	//**********************
-
-
-	if( key_pressed == 7 ) {
-
-		if(timer_2_lock == 0){
-			timer_2 = 150;
-			timer_2_lock = 1;
-		}
-	}
-
-	//short press
-	if( (timer_2 > 70) && (timer_2 != 0) && (key_pressed == 0 ) && (timer_2_lock == 1) ){//short click 300ms max
-		SendStr("TPPS");//play pauza timera
-		timer_2=0;
-		timer_2_lock = 0;
-		_delay_ms(K_DEL_TIME);
-	}
-	//long press after 1000ms
-	if(  (timer_2 < 50) && (timer_2_lock == 1) && (key_pressed == 7) ){
-		SendStr("RSTS");//reset setów
-		beep();
-	}
-
-	if(timer_2 == 0){//auto reset timera
-		timer_2_lock = 0;
-	}
 }
 
 
@@ -230,20 +172,3 @@ void go_to_sleep(void)
 
     ADCSRA = adcsra;               //restore ADCSRA
 }
-
-
-
-ISR(TIMER0_COMPA_vect){//100Hz
-	uint8_t x;
-
-	x = timer_0;
-	if(x!=0)timer_0 = --x;
-
-	x = timer_1;
-	if(x!=0)timer_1 = --x;
-
-	x = timer_2;
-	if(x!=0)timer_2 = --x;
-
-}
-

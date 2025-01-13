@@ -98,6 +98,4 @@ extern void nrf24l01_settxaddr(uint8_t *addr);
 extern void nrf24l01_printinfo(void(*prints)(const char *), void(*printc)(unsigned char data));
 #endif
 
-void nrf24l01_writeregister(uint8_t reg, uint8_t value);
-
 #endif

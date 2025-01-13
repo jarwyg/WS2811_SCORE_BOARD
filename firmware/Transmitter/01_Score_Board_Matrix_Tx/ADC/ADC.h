@@ -10,7 +10,7 @@
 
 
 void InitADC(void);
-uint16_t pomiar(uint8_t kanal);
+uint16_t get_adc_value(uint8_t channel);
 
 
 #endif /* ADC_ADC_H_ */
