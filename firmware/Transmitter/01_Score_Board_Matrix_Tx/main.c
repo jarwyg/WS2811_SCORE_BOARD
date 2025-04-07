@@ -153,10 +153,17 @@ int main(void) {
 		if(int_flag == 1){
 			nrf24l01_CEhi;
 
+
+			uint32_t adc_value_average = 0;
+
 			uint16_t adc_value = get_adc_value(0);
 
+			for(uint8_t i = 0 ; i <= 20 ; i++){
+				adc_value_average += adc_value;
+			}
+			adc_value_average = adc_value_average/20;
 
-			if (adc_value < 460){//lower than 2,8V
+			if (adc_value_average < 460){//lower than 2,8V
 				LED_R_LOW_BATT_ON;//low battery LED on
 //				BUZZ_ON;
 				_delay_ms(K_DEL_TIME);
