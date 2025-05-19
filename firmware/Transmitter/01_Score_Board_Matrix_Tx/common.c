@@ -21,7 +21,7 @@
 #include "nrf24l01/nrf24l01.h"
 
 //nrf24l01 variables
-char bufferout[NRF24L01_PAYLOAD];
+uint8_t bufferout[NRF24L01_PAYLOAD];
 uint8_t bufferin[NRF24L01_PAYLOAD];
 
 
@@ -43,10 +43,12 @@ void beep(void)
 
 
 
-void SendStr(const char *charr){
-	strcpy(bufferout, charr);
-	sendMsg(0);
-	_delay_ms(200);
+void SendStr(uint8_t *charr){
+
+	strcpy((char*)bufferout, (char*)charr);
+	nrf24l01_settxaddr(addrtx0);
+	nrf24l01_write((uint8_t*)bufferout);
+
 #ifdef DBG
 	uart_puts((char*)charr);
 	uart_puts("\r\n");
@@ -55,6 +57,8 @@ void SendStr(const char *charr){
 }
 
 
+
+/*
 void sendMsg(uint8_t pipe) {
 	if (pipe == 0) {
 		//set tx address for pipe 0
@@ -79,81 +83,76 @@ void sendMsg(uint8_t pipe) {
 	nrf24l01_write((uint8_t*)bufferout);
 
 }
-
-
-
-
-
-
-
-
+*/
 
 
 void CheckKeys(uint8_t key_pressed){
 
+#ifdef DBG
 	uart_putlong(key_pressed,10);
 	uart_puts("\r\n");
+#endif
 
 	if( key_pressed == 35 || key_pressed == 43 ) {
-		SendStr("RSTS");//reset setów
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"RSTS");//reset setów
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 36 || key_pressed == 44 ) {
-		SendStr("RSTP");//reset punktów
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"RSTP");//reset punktów
+		_delay_ms(K_DELAY_TIME);
 	}
 
 	if( key_pressed == 12 ) {
-		SendStr("D2P-");//Y1
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D2P-");//Y1
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 11 ) {
-		SendStr("D2P+");//Y2
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D2P+");//Y2
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 10 ) {
-		SendStr("D2S-");//Y3
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D2S-");//Y3
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 9 ) {
-		SendStr("D2S+");//Y4
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D2S+");//Y4
+		_delay_ms(K_DELAY_TIME);
 	}
 
 	if( key_pressed == 8 ) {
-		SendStr("TRST");
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"TRST");
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 7 ) {
-		SendStr("TPPS");
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"TPPS");
+		_delay_ms(K_DELAY_TIME);
 	}
 
 
 	if( key_pressed == 6 ) {
-		SendStr("MIN+");
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"MIN+");
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 5 ) {
-		SendStr("HOR+");
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"HOR+");
+		_delay_ms(K_DELAY_TIME);
 	}
 
 	if( key_pressed == 4 ) {
-		SendStr("D1P-");//R1
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D1P-");//R1
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 3 ) {
-		SendStr("D1P+");//R2
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D1P+");//R2
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 2 ) {
-		SendStr("D1S-");//R3
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D1S-");//R3
+		_delay_ms(K_DELAY_TIME);
 	}
 	if( key_pressed == 1 ) {
-		SendStr("D1S+");//R4
-		_delay_ms(K_DEL_TIME);
+		SendStr((uint8_t*)"D1S+");//R4
+		_delay_ms(K_DELAY_TIME);
 	}
 
 

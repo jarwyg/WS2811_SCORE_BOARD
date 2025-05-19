@@ -18,6 +18,7 @@ Please refer to LICENSE file for licensing information.
 
 #include <avr/io.h>
 
+
 //CE and CSN port definitions
 #define NRF24L01_DDR DDRB
 #define NRF24L01_PORT PORTB
@@ -25,7 +26,7 @@ Please refer to LICENSE file for licensing information.
 #define NRF24L01_CSN PB2
 
 //define the spi path
-#define NRF24L01_SPIPATH "spi.h" //spi lib path
+#define NRF24L01_SPIPATH "../SPI/spi.h" //spi lib path
 
 //CE and CSN functions
 #define nrf24l01_CSNhi NRF24L01_PORT |= (1<<NRF24L01_CSN);
@@ -83,6 +84,14 @@ Please refer to LICENSE file for licensing information.
 #define NRF24L01_ADDRP4 {0xC1, 0xC2, 0xC2, 0xC2, 0xC5} //pipe 4, 5 byte address
 #define NRF24L01_ADDRP5 {0xC1, 0xC2, 0xC2, 0xC2, 0xC6} //pipe 5, 5 byte address
 #define NRF24L01_ADDRTX {0xE8, 0xE8, 0xF0, 0xF0, 0xE2} //tx default address*/
+
+
+
+
+
+
+
+
 
  //enable print info function
 #define NRF24L01_PRINTENABLE 1

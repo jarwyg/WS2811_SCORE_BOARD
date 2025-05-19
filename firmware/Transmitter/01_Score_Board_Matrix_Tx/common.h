@@ -8,10 +8,10 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
-#define DBG
+//#define DBG
 
 
-#define K_DEL_TIME 200
+#define K_DELAY_TIME 200
 
 
 #define BUZZ (1<<PD7)
@@ -59,8 +59,7 @@ void parse_uart_data( char * pBuf );
 void beep(void);
 void CheckBattery(void);
 
-void sendMsg(uint8_t pipe);
-void SendStr(const char *charr);
+void SendStr(uint8_t *charr);
 
 void CheckKeys(uint8_t key_pressed);
 void go_to_sleep(void);

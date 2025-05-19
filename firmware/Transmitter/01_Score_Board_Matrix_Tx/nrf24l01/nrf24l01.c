@@ -15,10 +15,12 @@ Please refer to LICENSE file for licensing information.
 #include <stdio.h>
 
 #include "nrf24l01.h"
-
 #include "nrf24l01registers.h"
 
-#include "../SPI/spi.h"
+//#include "../MK_USART/mkuart.h"
+
+//include spi library functions
+#include NRF24L01_SPIPATH
 
 //address variables
 static uint8_t nrf24l01_addr0[NRF24L01_ADDRSIZE] = NRF24L01_ADDRP0;
@@ -146,13 +148,13 @@ void nrf24l01_flushTXfifo() {
  * set chip as RX
  */
 void nrf24l01_setRX() {
-//	nrf24l01_setrxaddr(0, nrf24l01_addr0); //restore pipe 0 address
-//	nrf24l01_writeregister(NRF24L01_REG_CONFIG, nrf24l01_readregister(NRF24L01_REG_CONFIG) | (1<<NRF24L01_REG_PRIM_RX)); //prx mode
-//	nrf24l01_writeregister(NRF24L01_REG_CONFIG, nrf24l01_readregister(NRF24L01_REG_CONFIG) | (1<<NRF24L01_REG_PWR_UP)); //power up
-//	nrf24l01_writeregister(NRF24L01_REG_STATUS, (1<<NRF24L01_REG_RX_DR) | (1<<NRF24L01_REG_TX_DS) | (1<<NRF24L01_REG_MAX_RT)); //reset status
-//	nrf24l01_flushRXfifo(); //flush rx fifo
-//	nrf24l01_flushTXfifo(); //flush tx fifo
-//	nrf24l01_CEhi; //start listening
+	nrf24l01_setrxaddr(0, nrf24l01_addr0); //restore pipe 0 address
+	nrf24l01_writeregister(NRF24L01_REG_CONFIG, nrf24l01_readregister(NRF24L01_REG_CONFIG) | (1<<NRF24L01_REG_PRIM_RX)); //prx mode
+	nrf24l01_writeregister(NRF24L01_REG_CONFIG, nrf24l01_readregister(NRF24L01_REG_CONFIG) | (1<<NRF24L01_REG_PWR_UP)); //power up
+	nrf24l01_writeregister(NRF24L01_REG_STATUS, (1<<NRF24L01_REG_RX_DR) | (1<<NRF24L01_REG_TX_DS) | (1<<NRF24L01_REG_MAX_RT)); //reset status
+	nrf24l01_flushRXfifo(); //flush rx fifo
+	nrf24l01_flushTXfifo(); //flush tx fifo
+	nrf24l01_CEhi; //start listening
 	_delay_us(150); //wait for the radio to power up
 }
 

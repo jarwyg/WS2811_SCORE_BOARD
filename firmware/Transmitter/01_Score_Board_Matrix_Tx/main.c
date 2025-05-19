@@ -27,46 +27,19 @@
 uint8_t key_pressed;
 
 
-
-
-
-
 uint8_t check_rows(uint8_t column){
 	uint8_t to_return = 0;
-//	if(!(PINC & ROW1_PIN)){
-//		to_return = 1;
-//	}
-//	if(!(PINC & ROW2_PIN)){
-//
-//		if(to_return == 1) to_return = 22;
-//		else to_return = 2;
-//	}
-//	if(!(PINC & ROW3_PIN)){
-//		to_return = 3;
-//	}
-//	if(!(PINC & ROW4_PIN)){
-//
-//		if(to_return == 3) to_return = 24;
-//		else to_return = 4;
-//	}
-//
-
-
 
 	if(!(PINC & ROW1_PIN)){
-//		return (column * 4 + 1);
 		to_return = (column * 4 + 1);
 	}
 	if(!(PINC & ROW2_PIN)){
-//		return (column * 4 + 2);
 		to_return = (column * 4 + 2);
 	}
 	if(!(PINC & ROW3_PIN)){
-//		return (column * 4 + 3);
 		to_return = (column * 4 + 3);
 	}
 	if(!(PINC & ROW4_PIN)){
-//		return (column * 4 + 4);
 		to_return = (column * 4 + 4);
 	}
 	if(!(PINC & ROW1_PIN) && !(PINC & ROW2_PIN)){
@@ -75,11 +48,6 @@ uint8_t check_rows(uint8_t column){
 	if(!(PINC & ROW3_PIN) && !(PINC & ROW4_PIN)){
 		to_return = (column * 4 + 36);
 	}
-
-
-//	else{
-//		return 0;
-//	}
 
 	return to_return;
 }
@@ -123,9 +91,14 @@ uint8_t scan_keys(void)
 volatile uint8_t int_flag = 0;
 int main(void) {
 
+
+#ifdef DBG
 	uart_init(UBRR);//UART baud 9600
+#endif
+
 	nrf24l01_init();
 	InitADC();
+	_delay_ms(100);
 
 	LED_R_LOW_BATT_PIN_SET_AS_OUT;
 	LED_R_LOW_BATT_OFF;//low battery LED off
@@ -152,7 +125,7 @@ int main(void) {
 	while (1) {
 		if(int_flag == 1){
 			nrf24l01_CEhi;
-
+			_delay_ms(10);
 
 			uint32_t adc_value_average = 0;
 
@@ -163,20 +136,26 @@ int main(void) {
 			}
 			adc_value_average = adc_value_average/20;
 
-			if (adc_value_average < 460){//lower than 2,8V
+#ifdef DBG
+			uart_putlong(adc_value_average, 10);
+			uart_puts("\r\n");
+#endif
+
+
+			if (adc_value_average < 470){//lower than 2,55V
 				LED_R_LOW_BATT_ON;//low battery LED on
 //				BUZZ_ON;
-				_delay_ms(K_DEL_TIME);
+				_delay_ms(K_DELAY_TIME);
 			}else{
 				LED_G_TX_ON;//tx LED on
 				key_pressed = scan_keys();
 				CheckKeys(key_pressed);
 			}
 
-
 			LED_R_LOW_BATT_OFF;//low battery LED off
 			LED_G_TX_OFF;//tx LED off
 //			BUZZ_OFF;
+
 
 			COL_PORT &= ~(COL1_PIN | COL2_PIN | COL3_PIN);//Col Output LOW
 			nrf24l01_CElo;
