@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/user/00_Projekty/01_Szkoła_Projekty/2018.09.10_Tablica_Wyników/git/WS2811_SCORE_BOARD/hardware/Transmitter/2024.03.15_AVR_SCORE_BOARD_TX_v2/2024.03.15_AVR_SCORE_BOARD_TX_v2.sch)
-    (date "Thu 24 Oct 2024 07:20:44 PM CEST")
+    (date "Sat 17 May 2025 09:00:19 PM CEST")
     (tool "Eeschema 5.1.12-84ad8e8a86~92~ubuntu20.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -103,7 +103,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 65F7CF91))
     (comp (ref SW6)
-      (value SW_H-)
+      (value SW_M+)
       (footprint "Moje:SW_SMALL(6X6)")
       (libsource (lib Moje) (part SW_PUSH) (description ""))
       (sheetpath (names /) (tstamps /))
