@@ -24,5 +24,5 @@ Pilot działa na mikrokontrolerze Atmega88/168/328 (8MHz - wewnętrzny oscylator
 Domyślnie jest w trybie uśpienia i pownien pobierać mniej niż 70uA.
 Komunikacja z odbiornikiem odbywa się tylko w jedną stronę.
 
-
+Opis przycisków
 ![Opis przycisków](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/Remote_description.png "Opis przycisków")
