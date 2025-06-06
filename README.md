@@ -32,3 +32,5 @@ Komunikacja z odbiornikiem odbywa się tylko w jedną stronę.
 Opis przycisków
 ![Opis przycisków](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/Remote_description.png "Opis przycisków")
 
+PCB
+![PCB_TX1](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/TX_PCB1.png "PCB_TX1")
