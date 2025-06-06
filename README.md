@@ -7,6 +7,7 @@ Projekt elektroniki sterującej tablicą wyników zbudowanej z wykorzystaniem pa
 Firmware jest napisany w jęzku c.
 Projekt był stworzony w Eclipse z AVR plugin (kompilator avr-gcc). Katalog Release zawiera pliki makefile więc można projekt skompliować z poziomu terminala.
 Gotowe pliki binarne można znaleźć poniżej
+
 [Firmware Release v1.2](https://github.com/jarwyg/WS2811_SCORE_BOARD/releases/tag/v1.2)
 
 
@@ -22,3 +23,6 @@ Płytka powinna mieć wgrany bootloader z arduino UNO. Dzięki temu po podłącz
 Pilot działa na mikrokontrolerze Atmega88/168/328 (8MHz - wewnętrzny oscylator)
 Domyślnie jest w trybie uśpienia i pownien pobierać mniej niż 70uA.
 Komunikacja z odbiornikiem odbywa się tylko w jedną stronę.
+
+
+![Opis przycisków](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/Remote_description.png "Opis przycisków")
