@@ -17,6 +17,9 @@ Odbiornik działa na mikrokontrolerze Atmega88/168/328 (16MHz - zawnętrzny oscy
 Czas jest brany z RTC PCF8563.
 Płytka powinna mieć wgrany bootloader z arduino UNO. Dzięki temu po podłączeniu przejściówki USB-UART łatwiej będzie wgrać aktualizację/zobaczyć debug podczas pracy układu. Tablica prawdopodobnie będzie w niedostępnym miejscu więc zalecam zostawienie długiego przewodu USB/RS232 
 
+PCB
+![PCB_RX](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/RX_PCB.png "PCB_RX")
+
 
 # Transmitter
 
@@ -26,3 +29,4 @@ Komunikacja z odbiornikiem odbywa się tylko w jedną stronę.
 
 Opis przycisków
 ![Opis przycisków](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/Remote_description.png "Opis przycisków")
+
