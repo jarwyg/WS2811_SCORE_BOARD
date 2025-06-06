@@ -2,7 +2,9 @@
 
 ![Tablica](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/Tablica.png "Tablica")
 
-Projekt elektroniki sterującej tablicą wyników zbudowanej z wykorzystaniem pasków LED WS2811.
+W 2017 wraz z znajomym z roku stworzyliśmy tablicę wyników zbudowaną z wykorzystaniem pasków LED WS2811.
+
+W 2024 projekt został ulepszony pod względem hardware oraz firmware. Aktualnie jest opublikownay jako open-source (MIT License) 
 
 # Firmware
 
