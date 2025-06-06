@@ -1,5 +1,7 @@
 # WS2811_SCORE_BOARD
 
+![Tablica](https://github.com/jarwyg/WS2811_SCORE_BOARD/blob/main/img/Tablica.png "Tablica")
+
 Projekt elektroniki sterującej tablicą wyników zbudowanej z wykorzystaniem pasków LED WS2811.
 
 # Firmware
